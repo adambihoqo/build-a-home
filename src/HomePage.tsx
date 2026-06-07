@@ -60,7 +60,7 @@ export function HomePage({ onOpenProject }: Props) {
       <header className="home-header">
         <div>
           <h1 className="home-title">BuildSketch</h1>
-          <p className="home-subtitle">סקיצת בנייה קלה מקצועית</p>
+          <p className="home-subtitle">מערכת תכנון בנייה קלה מקצועית</p>
         </div>
         <button className="btn-primary" onClick={() => setShowNew(true)}>
           + פרויקט חדש
