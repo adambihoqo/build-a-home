@@ -10,6 +10,7 @@ import { SymbolPicker } from './modals/SymbolPicker';
 import { TextDialog } from './modals/TextDialog';
 import { DimensionDialog } from './modals/DimensionDialog';
 import { ExportModal } from './modals/ExportModal';
+import { SketchImportModal } from './modals/SketchImportModal';
 import { DEFAULT_LAYER_VISIBILITY } from './types';
 
 interface Props {
@@ -24,6 +25,7 @@ export function EditorPage({ projectId, onBack }: Props) {
   const [dimensions, setDimensions] = useState({ w: 800, h: 600 });
   const [rightTab, setRightTab] = useState<RightTab>('properties');
   const [bgOpacityLocal, setBgOpacityLocal] = useState(0.4);
+  const [showSketchImport, setShowSketchImport] = useState(false);
 
   const { projects, updateProject, saveBackground } = useProjectStore();
   const project = projects.find(p => p.id === projectId);
@@ -108,6 +110,15 @@ export function EditorPage({ projectId, onBack }: Props) {
             </select>
           </div>
 
+          {/* AI sketch import */}
+          <button
+            className="topbar-btn topbar-btn--primary"
+            title="ייבוא סקיצה ידנית עם AI — מעלים תמונה, AI מזהה קירות/חדרים/מידות"
+            onClick={() => setShowSketchImport(true)}
+          >
+            🤖 ייבוא סקיצה
+          </button>
+
           {/* Background image upload */}
           <label className="topbar-btn" title="העלה תמונת רקע (סקיצה ידנית)">
             <input type="file" accept="image/*" className="hidden" onChange={handleBgUpload} />
@@ -186,6 +197,13 @@ export function EditorPage({ projectId, onBack }: Props) {
       {showTextDialog && <TextDialog />}
       {showDimensionDialog && <DimensionDialog />}
       {showExportModal && <ExportModal />}
+      {showSketchImport && (
+        <SketchImportModal
+          canvasW={dimensions.w}
+          canvasH={dimensions.h}
+          onClose={() => setShowSketchImport(false)}
+        />
+      )}
     </div>
   );
 }
